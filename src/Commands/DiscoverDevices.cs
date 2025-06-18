@@ -13,7 +13,7 @@ namespace BluetoothDevicePairing.Commands;
 internal sealed class DiscoverDevicesOptions
 {
     [Option("discovery-time",
-            Default = 3,
+            Default = 10,
             HelpText = "how long to search for devices. Units: seconds")]
     public int DiscoveryTime { get; set; }
 }
