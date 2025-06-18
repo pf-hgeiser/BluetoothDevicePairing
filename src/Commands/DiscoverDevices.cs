@@ -40,11 +40,6 @@ internal static class DiscoverDevices
             PrintDevice2File(d, fileNameAndPath);
         }
 
-        using (StreamWriter outputFile = new StreamWriter(fileNameAndPath, true))
-        {
-            outputFile.WriteLine(new string('-', 73));
-        }
-
         Console.WriteLine(new string('-', 73));
     }
 
