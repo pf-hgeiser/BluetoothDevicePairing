@@ -1,6 +1,7 @@
 using CommandLine;
 using System;
 using BluetoothDevicePairing.Bluetooth.Adapters;
+using System.IO;
 
 namespace BluetoothDevicePairing.Commands;
 
@@ -20,6 +21,9 @@ internal static class ListAdapters
         foreach (var a in adapters)
         {
             PrintAdapter(a);
+#pragma warning disable S1075
+            PrintAdapter2File(a, "c:\\temp\\BTadaptors.txt");
+#pragma warning restore S1075
         }
         Console.WriteLine(new string('-', 71));
     }
@@ -27,6 +31,14 @@ internal static class ListAdapters
     private static void PrintAdapter(Adapter a)
     {
         Console.WriteLine($"|{IsDefault(a),1}|{a.MacAddress}|{a.Name,-40}|{a.State,-8}|");
+    }
+
+    private static void PrintAdapter2File(Adapter a, string fileNameAndPath)
+    {
+        using (StreamWriter outputFile = new StreamWriter(fileNameAndPath))
+        {
+            outputFile.WriteLine("IsDefault="+IsDefault(a)+";MacAdr="+a.MacAddress+";Name="+a.Name+";State="+a.State+";");
+        }
     }
 
     private static string IsDefault(Adapter a)

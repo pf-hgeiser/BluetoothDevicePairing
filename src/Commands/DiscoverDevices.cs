@@ -67,7 +67,7 @@ internal static class DiscoverDevices
     {
         using (StreamWriter outputFile = new StreamWriter(fileNameAndPath, true))
         {
-            outputFile.WriteLine($"|{GetType(d),4}|{d.Id.DeviceMac}|{GetConnectionStatus(d),-9}|{GetName(d),-40}|");
+            outputFile.WriteLine("Type="+GetType(d)+";Id="+d.Id.DeviceMac+";Status="+GetConnectionStatus(d)+";Name="+GetName(d)+";");
 
             if (!d.AssociatedAudioDevices.Any())
             {
