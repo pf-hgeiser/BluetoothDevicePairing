@@ -29,20 +29,10 @@ internal static class DiscoverDevices
 #pragma warning disable S1075
         string fileNameAndPath = "c:\\temp\\BTdevices.txt";
 #pragma warning restore S1075
-        using (StreamWriter outputFile = new StreamWriter(fileNameAndPath))
-        {
-            outputFile.WriteLine($"|Type|{"DeviceMac",17}|{"ConnectionStatus",-9}|{"Name",-40}|");
-        }
-
         foreach (var d in devices)
         {
             PrintDevice(d);
             PrintDevice2File(d, fileNameAndPath);
-        }
-
-        using (StreamWriter outputFile = new StreamWriter(fileNameAndPath, true))
-        {
-            outputFile.WriteLine(new string('-', 73));
         }
 
         Console.WriteLine(new string('-', 73));
