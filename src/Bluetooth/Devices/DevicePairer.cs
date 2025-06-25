@@ -49,8 +49,8 @@ internal static class DevicePairer
         // the PairingRequestedHandler was called with PairingKind equal to DevicePairingKinds.DisplayPin instead of DevicePairingKinds.ProvidePin, which made pairing fail.
         // Therefore, I decided not to use DevicePairingKinds.DisplayPin flag.
 
-        Console.WriteLine("## Press Enter on keyboard to confirm ##");
-        var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.ConfirmOnly) 
+        Console.WriteLine("## type in number + Press Enter on keyboard to confirm ##");
+        var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.ProvidePin) 
         //var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.ConfirmOnly  |
         //                                       Windows.Devices.Enumeration.DevicePairingKinds.ProvidePin | 
         //                                       Windows.Devices.Enumeration.DevicePairingKinds.ConfirmPinMatch,
