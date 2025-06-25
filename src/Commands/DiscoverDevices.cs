@@ -13,7 +13,7 @@ namespace BluetoothDevicePairing.Commands;
 internal sealed class DiscoverDevicesOptions
 {
     [Option("discovery-time",
-            Default = 10,
+            Default = 5,
             HelpText = "how long to search for devices. Units: seconds")]
     public int DiscoveryTime { get; set; }
 }
@@ -34,7 +34,10 @@ internal static class DiscoverDevices
             File.Delete(fileNameAndPath);
         }
 
-        foreach (var d in devices)
+        //HG show only K850 devices
+        var kbDevices = devices.Where(a => a.Name.Contains("K850"));
+        foreach (var d in kbDevices)
+//        foreach (var d in devices)
         {
             PrintDevice(d);
             PrintDevice2File(d, fileNameAndPath);

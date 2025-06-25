@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Windows.Devices.Enumeration;
 using static Vanara.PInvoke.Ole32.PROPERTYKEY.System;
 using static Vanara.PInvoke.User32;
+using DeviceWatcher = BluetoothDevicePairing.Bluetooth.Devices.Utils.DeviceWatcher;
 
 namespace BluetoothDevicePairing.Bluetooth.Devices;
 
@@ -38,6 +40,7 @@ internal static class DeviceDiscoverer
 
     private static List<Device> Discover(AsqFilter filter, DiscoveryTime time)
     {
+        
         Console.WriteLine($"Start discovering devices for {time.Seconds} seconds\n");
 
         var watcher = new DeviceWatcher(filter);

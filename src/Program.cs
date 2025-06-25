@@ -34,6 +34,7 @@ catch (AppException ex)
 {
     Console.WriteLine($"Failed: {ex.Message}");
     Console.WriteLine("Press Enter");
+
     Console.ReadLine();
     return -1;
 }

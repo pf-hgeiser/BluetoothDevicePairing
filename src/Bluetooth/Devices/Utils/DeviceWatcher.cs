@@ -30,6 +30,8 @@ internal sealed class DeviceWatcher
                     {
                         devices.RemoveAt(i);    
                     }
+ 
+
                 }
             }
 
