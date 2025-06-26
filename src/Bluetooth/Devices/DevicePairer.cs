@@ -50,7 +50,7 @@ internal static class DevicePairer
         // Therefore, I decided not to use DevicePairingKinds.DisplayPin flag.
 
         Console.WriteLine("## type in number + Press Enter on keyboard to confirm ##");
-        var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.ProvidePin) 
+        var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.ConfirmOnly) 
         //var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.ConfirmOnly  |
         //                                       Windows.Devices.Enumeration.DevicePairingKinds.ProvidePin | 
         //                                       Windows.Devices.Enumeration.DevicePairingKinds.ConfirmPinMatch,
