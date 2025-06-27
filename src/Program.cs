@@ -26,14 +26,14 @@ static void ParseCommandLineAndExecuteActions(string[] args)
 try
 {
     ParseCommandLineAndExecuteActions(args);
-    Console.WriteLine("Press Enter");
+    Console.WriteLine("Press Enter on PC keyboard");
     Console.ReadLine();
     return 0;
 }
 catch (AppException ex)
 {
     Console.WriteLine($"Failed: {ex.Message}");
-    Console.WriteLine("Press Enter");
+    Console.WriteLine("Press Enter on PC keyboard");
 
     Console.ReadLine();
     return -1;
@@ -41,7 +41,7 @@ catch (AppException ex)
 catch (Exception ex)
 {
     Console.WriteLine($"Unexpected failure: {ex}");
-    Console.WriteLine("Press Enter");
+    Console.WriteLine("Press Enter on PC keyboard");
     Console.ReadLine();
     return -1;
 }

@@ -23,6 +23,7 @@ internal static class DiscoverDevices
     public static void Execute(DiscoverDevicesOptions opts)
     {
         var devices = DeviceDiscoverer.DiscoverBluetoothDevices(new DiscoveryTime(opts.DiscoveryTime)).OrderBy(d => d.Name);
+        Console.WriteLine("List all K850 devices:");
         Console.WriteLine(new string('-', 73));
         Console.WriteLine($"|Tp|{"Dev",17}|ConStatus|{"Name", -40}|");
         Console.WriteLine(new string('-', 73));
@@ -35,15 +36,51 @@ internal static class DiscoverDevices
         }
 
         //HG show only K850 devices
-        var kbDevices = devices.Where(a => a.Name.Contains("K850"));
-        foreach (var d in kbDevices)
-//        foreach (var d in devices)
+        var k850Devices = devices.Where(a => a.Name.Contains("K850"));
+        if (k850Devices.Any())
         {
-            PrintDevice(d);
-            PrintDevice2File(d, fileNameAndPath);
+            foreach (var d in k850Devices)
+            {
+                PrintDevice(d);
+                PrintDevice2File(d, fileNameAndPath);
+            }
+        }
+        else
+        {
+            Console.WriteLine("## No K850 device found, try switching on power ##");
+        }
+
+        //HG show only newest K850 devices
+#pragma warning disable S1075
+        string latestFileNameAndPath = "c:\\temp\\mac.txt";
+#pragma warning restore S1075
+
+        Console.WriteLine($"Write newest K850 devices to file {latestFileNameAndPath}");
+        var listOfMacs = k850Devices.Select(a => a.Id.DeviceMac.ToString());
+        if (listOfMacs is not null)
+        {
+            var highestMac = listOfMacs.Max();
+            if (File.Exists(latestFileNameAndPath))
+            {
+                File.Delete(latestFileNameAndPath);
+            }
+            PrintMac2File(highestMac, latestFileNameAndPath);
+        }
+        else
+        {
+            Console.WriteLine("## Newest K850 device found, try switching on power ##");
         }
 
         Console.WriteLine(new string('-', 73));
+    }
+
+    private static void PrintMac2File(string macAdress, string latestFileNameAndPath)
+    {
+        using (StreamWriter outputFile = new StreamWriter(latestFileNameAndPath, true))
+        {
+            Console.WriteLine($"mac adress {macAdress} written");
+            outputFile.WriteLine(macAdress);
+        }
     }
 
     private static void PrintDevice(Device d)
