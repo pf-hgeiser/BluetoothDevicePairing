@@ -1,4 +1,5 @@
 @echo off
+echo ## UNPAIR ##
 echo unpair.bat: given file: %1
 FOR /f %%f IN (%1) DO set mac=%%f
 echo MAC adress found=%mac%

@@ -1,0 +1,110 @@
+Verarbeitet Ausdrcke in einer Batchdatei abh„ngig von Bedingungen.
+
+IF [NOT] ERRORLEVEL Nummer Befehl
+IF [NOT] Zeichenfolge1==Zeichenfolge2 Befehl
+IF [NOT] EXIST Dateiname Befehl
+
+  NOT              Befehl wird nur dann ausgefhrt, wenn die Bedingung nicht
+                   erfllt ist.
+
+  ERRORLEVEL Zahl  Bedingung ist erfllt, wenn das zuletzt ausgefhrte
+                   Programm einen Code gr”áer oder gleich der Nummer
+                   zurckgibt.
+
+  Zeichenfolge1==Zeichenfolge2
+                   Bedingung ist erfllt, falls die Zeichenfolgen gleich sind.
+  
+  EXIST Dateiname  Bedingung ist erfllt, wenn die angegebene Datei existiert.
+
+  Befehl           Gibt den Befehl an, der bei erfllter Bedingung ausgefhrt
+                   werden soll. Diesem Befehl kann das Schlsselwort ELSE
+                   folgen. Der Befehl nach dem Wort ELSE wird ausgefhrt, wenn
+                   die angegebene Bedingung nicht erfllt ist (FALSE).
+
+Die ELSE-Klausel muss auf derselben Zeile mit dem Befehl nach IF stehen.
+Zum Beispiel:
+
+    IF EXIST test.txt (
+        del test.txt
+    ) ELSE (
+        echo test.txt fehlt
+    )
+
+Die beiden folgenden Beispiele funktionieren nicht. 
+Im ersten Fall wird der DEL-Befehl nicht durch ein Zeilenende abgeschlossen:
+
+    IF EXIST test.txt del test.txt ELSE echo test.txt fehlt
+
+In zweiten Fall befindet sich der ELSE-Befehl nicht auf derselben Zeile mit
+dem IF Schlsselwort:
+
+    IF EXIST test.txt del test.txt
+    ELSE echo test.txt fehlt
+
+Hier ein Beispiel, wie alles auf einer Zeile angegeben werden kann:
+
+    IF EXIST test.txt (del test.txt) ELSE echo test.txt fehlt
+
+Wenn die Befehlserweiterungen aktiviert sind, wird der
+IF-Befehl folgendermaáen ver„ndert:
+
+    IF [/I] Zeichenfolge1 Vergleichsoperator Zeichenfolge2 Befehl
+    IF CMDEXTVERSION Zahl Befehl
+    IF DEFINED Variable Befehl
+
+M”gliche Vergleichsoperatoren:
+
+    EQU - gleich
+    NEQ - nicht gleich
+    LSS - kleiner als
+    LEQ - kleiner als oder gleich
+    GTR - gr”áer als
+    GEQ - gr”áer als oder gleich
+
+Die /I-Option wird angegeben, um die Groá-/Kleinschreibung
+beim Vergleich zu ignorieren. Die /I-Option kann auch in der Form
+"Zeichenfolge1==Zeichenfolge2" von "IF" verwendet werden.
+Diese Vergleiche sind allgemein, das heiát, wenn beide Zeichenfolgen
+nur aus Ziffern bestehen, werden die Zeichenfolgen in Zahlen
+umgewandelt, und es wird ein numerischer Vergleich durchgefhrt.
+
+Die Bedingung "CMDEXTVERSION" arbeitet genau wie "ERRORLEVEL", nur
+dass dabei mit einer internen Versionsnummer der Befehlserweiterungen
+verglichen wird. Die erste Versionsnummer ist "1". Diese wird um eins erh”ht,
+wenn bedeutende Verbesserungen an den Befehlserweiterungen vorge-
+nommen werden.
+Die Bedingung "CMDEXTVERSION" ist falsch, wenn die Befehlserweiterungen
+nicht aktiviert sind.
+
+Die Bedingung "DEFINED" arbeitet genau wie "EXIST", bezieht sich
+aber auf den Namen einer Umgebungsvariablen und ist wahr, wenn
+die Umgebungsvariable definiert ist.
+
+Der Ausdruck "%ERRORLEVEL%" wird zu einer Zeichendarstellung
+des aktuellen Werts der Variablen "ERRORLEVEL" expandiert (voraus-
+gesetzt, es ist nicht bereits eine Umgebungsvariable mit dem Namen
+"ERRORLEVEL" vorhanden, deren Wert dann zurckgegeben wrde).
+Nachdem ein Programm ausgefhrt wurde, gestaltet sich die Verwendung
+von "ERRORLEVEL" wie folgt:
+
+    goto Antwort%ERRORLEVEL%
+    :Antwort0
+    echo J fr Ja eingegeben
+    :Antwort1
+    echo N fr Nein eingegeben
+
+Auch die oben aufgefhrten numerischen
+Vergleiche k”nnen verwendet werden:
+
+    IF %ERRORLEVEL% LEQ 1 goto ok
+
+Der Ausdruck "%CMDCMDLINE%" wird zu der ursprnglichen Befehls-
+zeile expandiert, die "CMD.EXE" vor einer beliebigen Bearbeitung bergeben
+wird (vorausgesetzt, es ist nicht bereits eine Umgebungsvariable mit dem
+Namen "CMDCMDLINE" vorhanden, deren Wert dann zurckgegeben
+wrde).
+
+Der Ausdruck "%CMDEXTVERSION%" wird zu einer Zeichendarstellung
+des aktuellen Werts der Variablen "CMDEXTVERSION" expandiert (voraus-
+gesetzt, es ist nicht bereits eine Umgebungsvariable mit dem Namen
+"CMDEXTVERSION" vorhanden, deren Wert dann zurckgegeben wrde).

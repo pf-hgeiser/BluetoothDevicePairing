@@ -51,8 +51,9 @@ internal static class DevicePairer
 
         Console.WriteLine("## Press Enter on BLUETOOTH keyboard to confirm ##");
         //Console.WriteLine("## type in number + Press Enter on keyboard to confirm ##");
-        var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.DisplayPin) 
+        var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.ConfirmOnly) 
         //var res = pairingInfo.Custom.PairAsync(Windows.Devices.Enumeration.DevicePairingKinds.ConfirmOnly  |
+        //                                       Windows.Devices.Enumeration.DevicePairingKinds.DisplayPin | 
         //                                       Windows.Devices.Enumeration.DevicePairingKinds.ProvidePin | 
         //                                       Windows.Devices.Enumeration.DevicePairingKinds.ConfirmPinMatch,
         //                                       Windows.Devices.Enumeration.DevicePairingProtectionLevel.None)
@@ -85,6 +86,12 @@ internal static class DevicePairer
                 Console.WriteLine("Pairing mode: ProvidePin");
                 Console.WriteLine($"Pin is requested by the device. Using '{pin}' as a pin code");
                 Console.ReadLine();
+                args.Accept(pin);
+                return;
+
+            case Windows.Devices.Enumeration.DevicePairingKinds.DisplayPin:
+                Console.WriteLine("Pairing mode: DisplayPin");
+                Console.WriteLine($"Pin is requested by the device. Using '{pin}' as a pin code");
                 args.Accept(pin);
                 return;
 

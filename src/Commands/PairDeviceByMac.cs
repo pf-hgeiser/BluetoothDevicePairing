@@ -1,6 +1,8 @@
 using BluetoothDevicePairing.Bluetooth.Devices;
 using BluetoothDevicePairing.Commands.Utils;
 using CommandLine;
+using System;
+using Windows.ApplicationModel;
 
 namespace BluetoothDevicePairing.Commands;
 
@@ -21,5 +23,23 @@ internal static class PairDeviceByMac
         var mac = new DeviceMacAddress(opts.Mac);
         var device = DeviceFinder.FindDevicesByMac(mac, opts.DeviceType);
         DevicePairer.PairDevice(device, opts.PinCode);
+        device = DeviceFinder.FindDevicesByMac(mac, opts.DeviceType);
+        if (device != null)
+        {
+            Console.WriteLine("## Connection test ##");
+            Console.WriteLine("auf der Bluetooth Tastatur \"OK<Enter>\" eingeben");
+            string fromK850 = Console.ReadLine().ToUpper();
+            if (fromK850.Equals("OK"))
+            {
+                Console.WriteLine("Keyboard working");
+            }
+            else
+            {
+                Console.WriteLine("Keyboard connected, but FAIL");
+            }
+        }
+
+
+
     }
 }
